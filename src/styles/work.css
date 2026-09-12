@@ -1,0 +1,349 @@
+.work-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+
+.work-tabs {
+  position: sticky;
+  top: 2rem;
+}
+
+.work-panels,
+.work-tab-copy {
+  min-width: 0;
+}
+
+.work-tab {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) 1.5rem;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.75rem 0.25rem;
+  text-align: left;
+  color: var(--text-primary);
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--border-panel);
+}
+
+.work-tab:last-child {
+  border-bottom: 1px solid var(--border-panel);
+}
+
+.work-number {
+  align-self: start;
+  padding-top: 0.5rem;
+  font:
+    0.75rem ui-monospace,
+    monospace;
+}
+
+.work-tab-copy {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.work-tab-name {
+  font-size: clamp(1.6rem, 2.8vw, 2.65rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+}
+
+.work-tab-category {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.work-tab-arrow {
+  font-size: 1.4rem;
+  transition: transform 180ms ease;
+}
+
+.work-tab[aria-selected="true"] {
+  border-top-color: var(--accent-text);
+}
+
+.work-tab[aria-selected="true"] .work-tab-name,
+.work-tab[aria-selected="true"] .work-tab-arrow {
+  color: var(--accent-text);
+}
+
+.work-tab[aria-selected="true"] .work-tab-arrow {
+  transform: translateX(4px);
+}
+
+.work-panel {
+  animation: work-enter 280ms ease-out;
+}
+
+.work-panel[hidden] {
+  display: none;
+}
+
+.work-panel:focus-visible,
+.work-note summary:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 6px;
+}
+
+.work-visual {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  border: 1px solid var(--border-panel);
+  background:
+    radial-gradient(ellipse at 80% 20%, var(--gold-glow), transparent 65%),
+    var(--bg-panel);
+}
+
+.work-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  box-shadow: 0 18px 35px var(--core-shadow);
+  transform: perspective(900px) rotateY(-6deg) rotateX(3deg);
+  transition: transform 400ms ease;
+}
+
+.work-visual-caption {
+  position: absolute;
+  bottom: 0.6rem;
+  left: 1rem;
+  font:
+    0.65rem ui-monospace,
+    monospace;
+  color: var(--text-secondary);
+}
+
+.work-copy {
+  padding-top: 1.5rem;
+}
+
+.work-status {
+  margin-bottom: 0.8rem;
+  color: var(--accent-text);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.work-copy h3 {
+  max-width: 22ch;
+  font-size: clamp(1.65rem, 3vw, 2.3rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.045em;
+}
+
+.work-summary,
+.work-note p {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+.work-summary {
+  margin-top: 1rem;
+}
+
+.work-note {
+  margin-top: 1.25rem;
+  border-block: 1px solid var(--border-panel);
+}
+
+.work-note summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  min-height: 48px;
+  padding-block: 0.75rem;
+  list-style: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.work-note summary::-webkit-details-marker {
+  display: none;
+}
+
+.work-note summary span {
+  font-size: 1.2rem;
+  transition: transform 180ms ease;
+}
+
+.work-note[open] summary span {
+  transform: rotate(45deg);
+}
+
+.work-note p {
+  padding-bottom: 1rem;
+}
+
+.work-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+  min-height: 44px;
+  margin-top: 1.25rem;
+  border-bottom: 1px solid var(--accent-text);
+  font-size: 0.9rem;
+}
+
+.work-link span {
+  transition: transform 180ms ease;
+}
+
+/* NFC connection illustration */
+.bridge-art {
+  display: grid;
+  grid-template-columns: 0.8fr 0.5fr 1.2fr;
+  align-items: center;
+  gap: 0.65rem;
+  width: 100%;
+  max-width: 420px;
+  color: var(--accent-text);
+}
+
+.bridge-device {
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  font:
+    0.65rem ui-monospace,
+    monospace;
+}
+
+.bridge-phone,
+.bridge-screen {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  border: 1px solid currentColor;
+  background: var(--bg-root);
+}
+
+.bridge-phone {
+  max-width: 86px;
+  aspect-ratio: 1 / 1.8;
+  border-radius: 12px;
+}
+
+.bridge-phone span {
+  display: grid;
+  place-items: center;
+  width: 70%;
+  aspect-ratio: 1;
+  border: 1px dashed currentColor;
+  border-radius: 50%;
+}
+
+.bridge-screen {
+  position: relative;
+  aspect-ratio: 1.5;
+  border-radius: 4px;
+  font-size: clamp(1.5rem, 4vw, 3rem);
+}
+
+.bridge-screen::after {
+  content: "";
+  position: absolute;
+  bottom: -7px;
+  width: 60%;
+  border-bottom: 2px solid currentColor;
+}
+
+.bridge-wire {
+  position: relative;
+  border-top: 1px dashed currentColor;
+  margin-bottom: 1.5rem;
+}
+
+.bridge-wire span {
+  position: absolute;
+  bottom: 0.6rem;
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+  font:
+    0.6rem ui-monospace,
+    monospace;
+}
+
+@keyframes work-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .work-tab:hover .work-tab-name,
+  .work-link:hover {
+    color: var(--accent-text);
+  }
+
+  .work-visual:hover .work-image {
+    transform: none;
+  }
+
+  .work-link:hover span {
+    transform: translate(3px, -3px);
+  }
+}
+
+@media (max-width: 800px) {
+  .work-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .work-tabs {
+    position: static;
+  }
+
+  .work-tab {
+    padding-block: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-panel {
+    animation: none;
+  }
+
+  .work-image {
+    transform: none;
+    transition: none;
+  }
+}
+.work-placeholder {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-align: center;
+  color: var(--accent-text);
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 600;
+  letter-spacing: -0.06em;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .work-tab[aria-selected="false"]:hover .work-tab-name {
+    color: var(--text-primary);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-text);
+    text-underline-offset: 0.15em;
+  }
+}
