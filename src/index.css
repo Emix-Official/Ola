@@ -61,6 +61,13 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 2rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
 }
 
 body {
@@ -74,6 +81,7 @@ body {
     "Segoe UI",
     sans-serif;
   -webkit-font-smoothing: antialiased;
+  scrollbar-width: none;
 }
 
 button,

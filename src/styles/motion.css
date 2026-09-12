@@ -21,28 +21,39 @@
   );
 }
 
-/* A short reaction before the curtain starts. */
+/* Text shake effect from original portfolio during theme change. */
+.glitch-text,
 .brand-word.is-charging {
   transform-origin: center;
-  animation: markos-charge 200ms ease-in-out both;
+  animation: textGlitch 0.25s 3;
 }
 
-@keyframes markos-charge {
-  0%,
-  100% {
-    transform: none;
+@keyframes textGlitch {
+  0% {
+    transform: translate(0);
+    text-shadow: none;
   }
-
   20% {
-    transform: translate(-3px, 1px) skewX(-8deg) scaleX(1.05);
+    transform: translate(-3px, 2px);
+    text-shadow: 2px 0 var(--gold);
   }
-
-  45% {
-    transform: translate(3px, -1px) skewX(5deg) scaleX(0.98);
+  40% {
+    transform: translate(3px, -2px);
+    text-shadow: -2px 0 #fff;
   }
-
-  70% {
-    transform: translate(-1px, 0) skewX(-2deg);
+  60% {
+    transform: translate(-3px, -2px);
+    text-shadow:
+      2px 0 var(--gold),
+      -2px 0 #fff;
+  }
+  80% {
+    transform: translate(3px, 2px);
+    text-shadow: none;
+  }
+  100% {
+    transform: translate(0);
+    text-shadow: none;
   }
 }
 
@@ -100,7 +111,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .brand-word.is-charging {
+  .brand-word.is-charging,
+  .glitch-text {
     animation: none;
   }
 

@@ -129,7 +129,8 @@ export function useTheme() {
   function onLogoAnimationEnd(event: AnimationEvent<HTMLSpanElement>) {
     if (
       event.target !== event.currentTarget ||
-      event.animationName !== "markos-charge"
+      (event.animationName !== "textGlitch" &&
+        event.animationName !== "markos-charge")
     ) {
       return;
     }
