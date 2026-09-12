@@ -1,0 +1,170 @@
+.hero {
+  --intro-duration: 720ms;
+  --intro-step: 130ms;
+
+  grid-template-areas:
+    "copy core"
+    "details core";
+
+  row-gap: 2rem;
+}
+
+.hero-copy {
+  grid-area: copy;
+}
+
+.hero > .core-study {
+  grid-area: core;
+}
+
+.hero-details {
+  grid-area: details;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-details .hero-description {
+  margin-top: 0;
+}
+
+/* The normal styles are the finished, visible state. */
+
+.hero-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.hero-word {
+  --intro-delay: 0ms;
+
+  display: block;
+  transform-origin: left bottom;
+}
+
+.hero-word--form {
+  --intro-delay: var(--intro-step);
+}
+
+.hero-word--motion {
+  --intro-delay: calc(var(--intro-step) * 2);
+}
+
+.hero[data-entering="true"] .hero-word {
+  animation: hero-word-enter var(--intro-duration)
+    cubic-bezier(0.2, 0.75, 0.25, 1) var(--intro-delay) both;
+}
+
+/*
+ * Individual translate and rotate properties compose with the
+ * existing transform used by the core's expand interaction.
+ */
+
+.hero .core-plane {
+  --intro-delay: 0ms;
+  --arrival-x: -24px;
+  --arrival-z: -180px;
+  --arrival-spin: -10deg;
+}
+
+.hero .core-plane:nth-child(2) {
+  --intro-delay: var(--intro-step);
+  --arrival-x: 20px;
+  --arrival-z: -120px;
+  --arrival-spin: 7deg;
+}
+
+.hero .core-plane:nth-child(3) {
+  --intro-delay: calc(var(--intro-step) * 2);
+  --arrival-x: 0px;
+  --arrival-z: -70px;
+  --arrival-spin: -4deg;
+}
+
+.hero[data-entering="true"] .core-plane {
+  animation: core-layer-enter var(--intro-duration)
+    cubic-bezier(0.2, 0.75, 0.25, 1) var(--intro-delay) both;
+}
+
+.hero[data-entering="true"] .core-scene::before {
+  animation: core-light-enter
+    calc(var(--intro-duration) + var(--intro-step) * 2) ease-out both;
+}
+
+@keyframes hero-word-enter {
+  from {
+    transform: translateY(115%) rotate(4deg);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+@keyframes core-layer-enter {
+  0% {
+    opacity: 0;
+    translate: var(--arrival-x) 24px var(--arrival-z);
+    rotate: var(--arrival-spin);
+  }
+
+  60% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    translate: 0 0 0;
+    rotate: 0deg;
+  }
+}
+
+@keyframes core-light-enter {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+
+  65% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 800px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "copy"
+      "core"
+      "details";
+
+    gap: 1.5rem;
+    padding-top: 2rem;
+  }
+
+  .hero .hero-title {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    column-gap: 0.15em;
+    font-size: clamp(3rem, 13vw, 5.75rem);
+  }
+
+  .hero-line:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero[data-entering="true"] .hero-word,
+  .hero[data-entering="true"] .core-plane,
+  .hero[data-entering="true"] .core-scene::before {
+    animation: none;
+  }
+}

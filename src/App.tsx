@@ -1,5 +1,5 @@
 import type { AnimationEvent } from "react";
-import MarkOSCore from "./components/MarkOSCore";
+import Hero from "./components/Hero";
 import SelectedWork from "./components/SelectedWork";
 import ContactWindow from "./components/ContactWindow";
 import About from "./components/About";
@@ -79,36 +79,7 @@ export default function App() {
       />
 
       <main id="main-content">
-        <section
-          className="hero container"
-          id="home"
-          aria-labelledby="hero-title"
-        >
-          <div className="hero-copy">
-            <p className="eyebrow">Olaoluwa Abiodun</p>
-
-            <h1 id="hero-title">
-              Code.
-              <br />
-              Form.
-              <br />
-              <span className="accent">Motion.</span>
-            </h1>
-
-            <p className="hero-description">
-              I’m a software engineering student who builds software, models in
-              3D, and brings ideas to life through editing and animation.
-            </p>
-
-            <a className="primary-link" href="#work">
-              Explore my work
-              <span aria-hidden="true">↓</span>
-            </a>
-          </div>
-
-          <MarkOSCore />
-        </section>
-
+        <Hero />
         <SelectedWork />
         <About />
         <ContactWindow />

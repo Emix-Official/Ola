@@ -1,8 +1,22 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { KeyboardEvent } from "react";
-import { projects } from "../data/projects.ts";
-import type { Project } from "../data/projects.ts";
+import { projects } from "../data/projects";
+import type { Project } from "../data/projects";
 import "../styles/work.css";
+
+const COMPACT_QUERY = "(max-width: 800px)";
+
+function subscribeToLayout(onChange: () => void) {
+  const query = window.matchMedia(COMPACT_QUERY);
+
+  query.addEventListener("change", onChange);
+
+  return () => query.removeEventListener("change", onChange);
+}
+
+function getCompactLayout() {
+  return window.matchMedia(COMPACT_QUERY).matches;
+}
 
 function BridgePreview() {
   return (
@@ -31,6 +45,7 @@ function BridgePreview() {
     </div>
   );
 }
+
 function ProjectVisual({ project }: { project: Project }) {
   const [failedSrc, setFailedSrc] = useState<string | null>(null);
   const image = project.image;
@@ -65,39 +80,70 @@ function ProjectVisual({ project }: { project: Project }) {
     </div>
   );
 }
+
 export default function SelectedWork() {
   const [activeId, setActiveId] = useState(projects[0].id);
+
+  const isCompact = useSyncExternalStore(subscribeToLayout, getCompactLayout);
+
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const stripRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isCompact) return;
+
+    const strip = stripRef.current;
+    const index = projects.findIndex((project) => project.id === activeId);
+    const tab = tabRefs.current[index];
+
+    if (!strip || !tab) return;
+
+    const keepTabVisible = () => {
+      const stripBounds = strip.getBoundingClientRect();
+      const tabBounds = tab.getBoundingClientRect();
+
+      // Scroll the strip without moving the whole page.
+      if (tabBounds.left < stripBounds.left) {
+        strip.scrollLeft += tabBounds.left - stripBounds.left;
+      } else if (tabBounds.right > stripBounds.right) {
+        strip.scrollLeft += tabBounds.right - stripBounds.right;
+      }
+    };
+
+    keepTabVisible();
+
+    const observer = new ResizeObserver(keepTabVisible);
+    observer.observe(strip);
+
+    return () => observer.disconnect();
+  }, [activeId, isCompact]);
 
   function handleTabKey(
     event: KeyboardEvent<HTMLButtonElement>,
     index: number,
   ) {
+    const nextKey = isCompact ? "ArrowRight" : "ArrowDown";
+    const previousKey = isCompact ? "ArrowLeft" : "ArrowUp";
+
     let nextIndex: number;
 
-    switch (event.key) {
-      case "ArrowDown":
-        nextIndex = (index + 1) % projects.length;
-        break;
-
-      case "ArrowUp":
-        nextIndex = (index - 1 + projects.length) % projects.length;
-        break;
-
-      case "Home":
-        nextIndex = 0;
-        break;
-
-      case "End":
-        nextIndex = projects.length - 1;
-        break;
-
-      default:
-        return;
+    if (event.key === nextKey) {
+      nextIndex = (index + 1) % projects.length;
+    } else if (event.key === previousKey) {
+      nextIndex = (index - 1 + projects.length) % projects.length;
+    } else if (event.key === "Home") {
+      nextIndex = 0;
+    } else if (event.key === "End") {
+      nextIndex = projects.length - 1;
+    } else {
+      return;
     }
 
     event.preventDefault();
-    tabRefs.current[nextIndex]?.focus();
+
+    tabRefs.current[nextIndex]?.focus({
+      preventScroll: isCompact,
+    });
   }
 
   return (
@@ -105,6 +151,7 @@ export default function SelectedWork() {
       className="work-section container"
       id="work"
       aria-labelledby="work-title"
+      data-compact={isCompact}
     >
       <div className="section-heading">
         <h2 id="work-title">
@@ -118,7 +165,8 @@ export default function SelectedWork() {
           className="work-tabs"
           role="tablist"
           aria-label="Choose a project"
-          aria-orientation="vertical"
+          aria-orientation={isCompact ? "horizontal" : "vertical"}
+          ref={stripRef}
         >
           {projects.map((project, index) => (
             <button
