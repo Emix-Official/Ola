@@ -38,7 +38,7 @@ function themeReducer(state: ThemeState, action: ThemeAction): ThemeState {
       if (state.phase !== "idle") return state;
 
       return action.animate
-        ? { ...state, phase: "charge" }
+        ? { ...state, phase: "cover" }
         : { theme: oppositeTheme(state.theme), phase: "idle" };
 
     case "CHARGED":

@@ -23,7 +23,7 @@ function Header({
     <header className="site-header container">
       <a className="brand" href="#home" aria-label="MarkOS home">
         <span
-          className={`brand-word ${phase === "charge" ? "is-charging" : ""}`}
+          className={`brand-word ${phase !== "idle" ? "is-charging glitch-text" : ""}`}
           onAnimationEnd={onLogoAnimationEnd}
         >
           Mark<span className="accent">OS</span>
