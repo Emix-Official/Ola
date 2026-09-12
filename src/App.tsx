@@ -1,10 +1,11 @@
 import type { AnimationEvent } from "react";
 import MarkOSCore from "./components/MarkOSCore";
+import SelectedWork from "./components/SelectedWork";
+import ContactWindow from "./components/ContactWindow";
+import About from "./components/About";
 import { useTheme } from "./hooks/useTheme";
 import type { Theme, ThemePhase } from "./hooks/useTheme";
 import "./styles/motion.css";
-import SelectedWork from "./components/SelectedWork";
-import ContactWindow from "./components/ContactWindow";
 
 type HeaderProps = {
   theme: Theme;
@@ -32,6 +33,7 @@ function Header({
 
       <nav className="navigation" aria-label="Main navigation">
         <a href="#work">Selected work</a>
+        <a href="#about">About</a>
         <a href="#contact">Contact</a>
       </nav>
 
@@ -99,7 +101,8 @@ export default function App() {
             </p>
 
             <a className="primary-link" href="#work">
-              Explore my work <span aria-hidden="true">↓</span>
+              Explore my work
+              <span aria-hidden="true">↓</span>
             </a>
           </div>
 
@@ -107,7 +110,7 @@ export default function App() {
         </section>
 
         <SelectedWork />
-
+        <About />
         <ContactWindow />
       </main>
 

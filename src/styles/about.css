@@ -1,0 +1,216 @@
+.about-section {
+  padding-block: 3rem 6rem;
+}
+
+.about-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+  padding-top: 3rem;
+  border-top: 1px solid var(--border-panel);
+}
+
+.about-copy h2 {
+  max-width: 17ch;
+  margin-top: 1rem;
+  font-size: clamp(2.3rem, 4.5vw, 3.8rem);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.055em;
+}
+
+.about-bio {
+  max-width: 48ch;
+  margin-top: 1.25rem;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.about-origin {
+  min-width: 0;
+  padding-block: 1rem;
+  text-align: center;
+}
+
+.origin-word {
+  display: flex;
+  justify-content: center;
+  font-size: clamp(4rem, 8vw, 8rem);
+  line-height: 1.15;
+  font-weight: 650;
+  letter-spacing: -0.07em;
+}
+
+.origin-word span {
+  display: inline-block;
+  transition: transform 400ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.origin-os {
+  color: var(--accent-text);
+}
+
+.about-origin[data-open="true"] .origin-mark {
+  transform: translateX(-0.06em);
+}
+
+.about-origin[data-open="true"] .origin-os {
+  transform: translateX(0.08em) rotate(5deg);
+}
+
+.origin-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+  min-height: 44px;
+  margin-top: 1.5rem;
+  padding: 0.65rem 0;
+  border: 0;
+  border-bottom: 1px solid var(--border-gold-dim);
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+}
+
+.origin-button span {
+  color: var(--accent-text);
+  font-size: 1.1rem;
+}
+
+.origin-story {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 40ch;
+  margin: 1.25rem auto 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.8;
+  animation: origin-reveal 220ms ease-out;
+}
+
+.origin-story strong {
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+.origin-story[hidden] {
+  display: none;
+}
+
+.about-practices-title {
+  margin-top: 3.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.about-practices {
+  margin: 1rem 0 0;
+}
+
+.about-practice {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 0.7fr)
+    minmax(0, 1.3fr)
+    minmax(0, 1fr);
+  align-items: baseline;
+  gap: 2rem;
+  padding-block: 1.75rem;
+  border-top: 1px solid var(--border-panel);
+}
+
+.about-practice:last-child {
+  border-bottom: 1px solid var(--border-panel);
+}
+
+.about-practice dt {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  font-size: 1.8rem;
+  letter-spacing: -0.045em;
+}
+
+.practice-number {
+  color: var(--accent-text);
+  font:
+    0.7rem ui-monospace,
+    monospace;
+  letter-spacing: 0;
+}
+
+.about-practice dd {
+  min-width: 0;
+  margin: 0;
+  line-height: 1.8;
+}
+
+.practice-description {
+  font-size: 0.95rem;
+}
+
+.practice-detail {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+@keyframes origin-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .origin-button:hover {
+    color: var(--accent-text);
+  }
+}
+
+@media (max-width: 800px) {
+  .about-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .about-practice {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+
+  .origin-word {
+    font-size: clamp(4rem, 15vw, 7rem);
+  }
+}
+
+/* Give the additional About link room on smaller screens. */
+@media (max-width: 680px) {
+  .site-header {
+    grid-template-columns: 1fr auto;
+    gap: 0.5rem 1rem;
+    padding-block: 1rem 0.5rem;
+  }
+
+  .navigation {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .origin-word span {
+    transition: none;
+  }
+
+  .origin-story {
+    animation: none;
+  }
+}
