@@ -335,9 +335,8 @@ export default function CustomVideoPlayer({ clips, activeClipId, onSelectClip }:
           onClick={togglePlay}
           aria-label={`Play ${activeClip.label}`}
         >
-          <span className="big-play-glow" />
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M8 5v14l11-7z" />
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M9.5 7.5a1 1 0 0 1 1.57-.82l7.15 4.65a1 1 0 0 1 0 1.66l-7.15 4.65a1 1 0 0 1-1.57-.83V7.5z" />
           </svg>
         </button>
       )}
