@@ -292,7 +292,7 @@ p {
 }
 
 .core-scene {
-  height: 390px;
+  height: 430px;
   display: grid;
   place-items: center;
   position: relative;
@@ -365,8 +365,14 @@ p {
   text-transform: uppercase;
 }
 
+.is-expanded .core-plane {
+  background: color-mix(in srgb, var(--bg-panel) 82%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
 .is-expanded .core-plane:nth-child(1) {
-  transform: translateZ(-85px) translateX(-25px);
+  transform: translateZ(-115px) translateX(-55px) translateY(45px);
 }
 
 .is-expanded .core-plane:nth-child(2) {
@@ -374,7 +380,10 @@ p {
 }
 
 .is-expanded .core-plane:nth-child(3) {
-  transform: translateZ(85px) translateX(25px);
+  transform: translateZ(115px) translateX(55px) translateY(-45px);
+  background:
+    linear-gradient(135deg, var(--gold-glow), transparent 65%),
+    color-mix(in srgb, var(--bg-panel) 82%, transparent);
 }
 
 .core-button {
