@@ -19,21 +19,20 @@ export const raceFilm: RaceFilm = {
   summary: 'A three-car racing scene, made in Blender.',
   // Add your exact role and any asset credits once confirmed.
   clips: [
-    // Add these files to public/media/race, then uncomment this entry:
-    // {
-    //   id: 'render',
-    //   label: 'Render',
-    //   src: 'media/race/race.mp4',
-    //   poster: 'media/race/race-poster.jpg',
-    //   description: 'Three cars racing in a scene made in Blender.',
-    // },
-    // Optional second clip after exporting a matching viewport recording:
-    // {
-    //   id: 'viewport',
-    //   label: 'Viewport',
-    //   src: 'media/race/race-viewport.mp4',
-    //   description: 'The same racing scene viewed in the Blender viewport.',
-    // },
+    {
+      id: 'render',
+      label: 'Render',
+      src: 'media/race/race.mp4',
+      poster: 'media/race/race-poster.png',
+      description: 'Three cars racing in a scene made in Blender.',
+    },
+    ...(import.meta.env.DEV ? [{
+      id: 'viewport',
+      label: 'Viewport',
+      src: 'media/race/race-viewport.mov',
+      poster: 'media/race/race-poster.png',
+      description: 'The same racing scene viewed in the Blender viewport.',
+    }] : []),
   ],
 }
 
