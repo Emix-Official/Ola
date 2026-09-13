@@ -292,7 +292,7 @@ p {
 }
 
 .core-scene {
-  height: 430px;
+  height: 390px;
   display: grid;
   place-items: center;
   position: relative;
@@ -372,7 +372,7 @@ p {
 }
 
 .is-expanded .core-plane:nth-child(1) {
-  transform: translateZ(-115px) translateX(-55px) translateY(45px);
+  transform: translateZ(-65px) translateX(-35px) translateY(10px);
 }
 
 .is-expanded .core-plane:nth-child(2) {
@@ -380,17 +380,20 @@ p {
 }
 
 .is-expanded .core-plane:nth-child(3) {
-  transform: translateZ(115px) translateX(55px) translateY(-45px);
+  transform: translateZ(65px) translateX(35px) translateY(-10px);
   background:
     linear-gradient(135deg, var(--gold-glow), transparent 65%),
     color-mix(in srgb, var(--bg-panel) 82%, transparent);
 }
 
 .core-button {
+  position: relative;
+  z-index: 2;
   display: inline-flex;
   gap: 1.5rem;
   align-items: center;
   min-height: 44px;
+  margin-top: 1.75rem;
   padding: 0.7rem 0;
   color: var(--text-primary);
   background: transparent;
