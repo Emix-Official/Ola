@@ -178,9 +178,15 @@ export function createRaceViewer(
 
   async function loadScene() {
     try {
-      const relative = `${import.meta.env.BASE_URL}${config.src.replace(/^\/+/, '')}`
-      const url = new URL(relative, window.location.href)
-      const response = await fetch(url, { signal: abort.signal })
+      const preferredSrc = (import.meta.env.DEV && config.srcDev) ? config.srcDev : config.src
+      let relative = `${import.meta.env.BASE_URL}${preferredSrc.replace(/^\/+/, '')}`
+      let url = new URL(relative, window.location.href)
+      let response = await fetch(url, { signal: abort.signal })
+      if (!response.ok && preferredSrc !== config.src) {
+        relative = `${import.meta.env.BASE_URL}${config.src.replace(/^\/+/, '')}`
+        url = new URL(relative, window.location.href)
+        response = await fetch(url, { signal: abort.signal })
+      }
       if (!response.ok) throw new Error(`GLB request failed (${response.status}).`)
       const bytes = await response.arrayBuffer()
       validateGlb(bytes)
