@@ -1,0 +1,29 @@
+/* JavaScript smooths the stack; an extra CSS transition would add lag. */
+.core-scene[data-smooth-tilt='true'] .core-stack { transition: none; }
+
+.core-tilt-controls { display: none; margin-top: 1rem; }
+.core-tilt-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: .65rem; }
+.core-tilt-button {
+  min-height: 44px;
+  padding: .6rem 1rem;
+  border: 1px solid var(--border-gold-dim);
+  background: var(--bg-panel);
+  color: var(--text-primary);
+  border-radius: 100px;
+  font-size: .8rem;
+}
+.core-tilt-button[aria-pressed='true'] { color: var(--accent-text); }
+.core-tilt-button:disabled { opacity: .65; cursor: default; }
+.core-tilt-status {
+  min-height: 2.8em;
+  max-width: 40ch;
+  margin: .65rem auto 0;
+  color: var(--text-secondary);
+  font-size: .75rem;
+  line-height: 1.5;
+}
+
+/* Also includes tablets with a mouse attached. */
+@media (any-pointer: coarse) {
+  .core-tilt-controls { display: block; }
+}
