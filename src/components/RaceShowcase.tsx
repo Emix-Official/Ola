@@ -1,91 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { raceFilm } from '../data/raceFilm'
 import type { RaceClip } from '../data/raceFilm'
 import { raceScene, showRaceShowcase } from '../data/raceScene'
 import RaceSceneView from './RaceSceneView'
+import CustomVideoPlayer from './CustomVideoPlayer'
 import '../styles/race.css'
-
-function assetUrl(path: string) {
-  return `${import.meta.env.BASE_URL}${path.replace(/^\/+/, '')}`
-}
-
-function RacePlayer({ clip }: { clip: RaceClip }) {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const [failed, setFailed] = useState(false)
-  const [attempt, setAttempt] = useState(0)
-
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video || failed) return
-
-    function handleVisibilityChange() {
-      if (document.hidden) video?.pause()
-    }
-
-    const observer = typeof IntersectionObserver === 'undefined' ? null : new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting || entry.intersectionRatio < 0.2) video.pause()
-      },
-      { threshold: [0, 0.2] },
-    )
-    observer?.observe(video)
-    document.addEventListener('visibilitychange', handleVisibilityChange)
-
-    return () => {
-      video.pause()
-      observer?.disconnect()
-      document.removeEventListener('visibilitychange', handleVisibilityChange)
-    }
-  }, [failed, attempt])
-
-  if (failed) {
-    return (
-      <div className="race-player-error">
-        <p role="status">This clip couldn’t load.</p>
-        <button
-          type="button"
-          onClick={() => {
-            setFailed(false)
-            setAttempt((previous) => previous + 1)
-          }}
-        >
-          Try again
-        </button>
-      </div>
-    )
-  }
-
-  return (
-    <video
-      key={attempt}
-      ref={videoRef}
-      className="race-video"
-      src={assetUrl(clip.src)}
-      poster={clip.poster ? assetUrl(clip.poster) : undefined}
-      controls
-      playsInline
-      muted
-      preload="none"
-      aria-label={`${raceFilm.title} — ${clip.label}`}
-      aria-describedby="race-description"
-      onError={() => setFailed(true)}
-      onPlay={(event) => {
-        if (document.hidden) event.currentTarget.pause()
-      }}
-    >
-      {clip.captions && (
-        <track
-          kind="captions"
-          src={assetUrl(clip.captions.src)}
-          srcLang={clip.captions.language}
-          label={clip.captions.label}
-          default
-        />
-      )}
-      Your browser does not support this video.
-    </video>
-  )
-}
 
 function RaceFeature({ clips }: { clips: RaceClip[] }) {
   const [selectedId, setSelectedId] = useState(clips[0].id)
@@ -93,26 +12,13 @@ function RaceFeature({ clips }: { clips: RaceClip[] }) {
 
   return (
     <figure className="race-feature">
-      <div className="race-toolbar">
-        <span className="race-kicker">Blender / Three-car study</span>
-        {clips.length > 1 && (
-          <div className="race-versions" role="group" aria-label="Choose a view of the racing scene">
-            {clips.map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                aria-pressed={item.id === clip.id}
-                onClick={() => setSelectedId(item.id)}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
-
       <div className="race-screen">
-        <RacePlayer key={clip.id} clip={clip} />
+        <CustomVideoPlayer
+          key={selectedId}
+          clips={clips}
+          activeClipId={selectedId}
+          onSelectClip={setSelectedId}
+        />
       </div>
 
       <figcaption className="race-caption">

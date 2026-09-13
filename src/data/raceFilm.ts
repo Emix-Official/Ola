@@ -21,18 +21,18 @@ export const raceFilm: RaceFilm = {
   clips: [
     {
       id: 'render',
-      label: 'Render',
+      label: 'Rendered Film',
       src: 'media/race/race.mp4',
       poster: 'media/race/race-poster.png',
-      description: 'Three cars racing in a scene made in Blender.',
+      description: 'The final cinematic render created in Blender.',
     },
-    ...(import.meta.env.DEV ? [{
+    {
       id: 'viewport',
-      label: 'Viewport',
-      src: 'media/race/race-viewport.mov',
-      poster: 'media/race/race-poster.png',
-      description: 'The same racing scene viewed in the Blender viewport.',
-    }] : []),
+      label: 'Blender Viewport',
+      src: 'media/race/race-viewport.mp4',
+      poster: 'media/race/race-viewport-poster.png',
+      description: 'The 3D animation, wireframes, and camera trajectory viewed inside the Blender viewport.',
+    },
   ],
 }
 
