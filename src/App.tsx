@@ -2,7 +2,7 @@ import type { AnimationEvent } from 'react'
 import Hero from './components/Hero'
 import SelectedWork from './components/SelectedWork'
 import RaceShowcase from './components/RaceShowcase'
-import { showRaceFilm } from './data/raceFilm'
+import { showRaceShowcase } from './data/raceScene'
 import ContactWindow from './components/ContactWindow'
 import About from './components/About'
 import { useTheme } from './hooks/useTheme'
@@ -21,7 +21,7 @@ function Header({ theme, phase, onToggleTheme, onLogoAnimationEnd }: HeaderProps
     <header className="site-header container">
       <a className="brand" href="#home" aria-label="MarkOS home">
         <span
-          className={`brand-word ${phase !== 'idle' ? 'is-charging glitch-text' : ''}`}
+          className={`brand-word ${phase !== 'idle' ? 'is-charging' : ''}`}
           onAnimationEnd={onLogoAnimationEnd}
         >
           Mark<span className="accent">OS</span>
@@ -29,7 +29,7 @@ function Header({ theme, phase, onToggleTheme, onLogoAnimationEnd }: HeaderProps
       </a>
       <nav className="navigation" aria-label="Main navigation">
         <a href="#work">Selected work</a>
-        {showRaceFilm && <a href="#motion">Motion</a>}
+        {showRaceShowcase && <a href="#motion">Motion</a>}
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
       </nav>

@@ -1,0 +1,22 @@
+import { raceFilm } from './raceFilm'
+
+export type RaceSceneConfig = {
+  enabled: boolean
+  src: string
+  description: string
+  animationNames: string[]
+  maxPixelRatio: number
+}
+
+export const raceScene: RaceSceneConfig = {
+  // Set true after exporting public/media/race/race.glb.
+  enabled: false,
+  src: 'media/race/race.glb',
+  description: 'Explore the three-car racing scene in 3D.',
+  // Empty uses the first exported animation. A single combined race clip is ideal.
+  // If the cars have separate clips, list those exact names to play them together.
+  animationNames: [],
+  maxPixelRatio: 1.5,
+}
+
+export const showRaceShowcase = raceFilm.clips.length > 0 || raceScene.enabled || import.meta.env.DEV

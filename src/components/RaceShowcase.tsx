@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import { raceFilm, showRaceFilm } from '../data/raceFilm'
+import { raceFilm } from '../data/raceFilm'
 import type { RaceClip } from '../data/raceFilm'
+import { raceScene, showRaceShowcase } from '../data/raceScene'
+import RaceSceneView from './RaceSceneView'
 import '../styles/race.css'
 
 function assetUrl(path: string) {
@@ -142,8 +144,55 @@ function RacePlaceholder() {
   )
 }
 
+function RaceExperience() {
+  const [mode, setMode] = useState<'film' | 'scene'>('film')
+
+  return (
+    <>
+      <div className="race-mode-controls" role="group" aria-label="Choose how to explore the race">
+        {(raceFilm.clips.length > 0 || import.meta.env.DEV) && (
+          <button type="button" aria-pressed={mode === 'film'} onClick={() => setMode('film')}>
+            Watch the film
+          </button>
+        )}
+        {(raceScene.enabled || import.meta.env.DEV) && (
+          <button type="button" aria-pressed={mode === 'scene'} onClick={() => setMode('scene')}>
+            Explore in 3D
+          </button>
+        )}
+      </div>
+
+      {mode === 'film' ? (
+        raceFilm.clips.length > 0 ? <RaceFeature clips={raceFilm.clips} /> : import.meta.env.DEV ? (
+          <RacePlaceholder />
+        ) : (
+          <div className="race-scene-placeholder"><p>{raceScene.description}</p></div>
+        )
+      ) : raceScene.enabled ? (
+        <>
+          <RaceSceneView />
+          <div className="race-caption">
+            <div>
+              <h3>{raceFilm.title}</h3>
+              <p>{raceScene.description}</p>
+              {raceFilm.credits && <p className="race-credits">{raceFilm.credits}</p>}
+            </div>
+            <a className="race-contact" href="#contact">
+              Have something in mind? <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </>
+      ) : (
+        <div className="race-scene-placeholder">
+          <p>The interactive scene is ready to connect to your Blender export.</p>
+        </div>
+      )}
+    </>
+  )
+}
+
 export default function RaceShowcase() {
-  if (!showRaceFilm) return null
+  if (!showRaceShowcase) return null
 
   return (
     <section className="race-section container" id="motion" aria-labelledby="race-heading">
@@ -154,9 +203,7 @@ export default function RaceShowcase() {
         </div>
         <p className="race-summary">{raceFilm.summary}</p>
       </div>
-      {raceFilm.clips.length > 0
-        ? <RaceFeature clips={raceFilm.clips} />
-        : <RacePlaceholder />}
+      <RaceExperience />
     </section>
   )
 }
