@@ -310,6 +310,15 @@
   height: 8px;
 }
 
+/* Keep the visual track thin while making it easier to hit with a finger. */
+.player-progress-bar::before { content: ''; position: absolute; inset: -9px 0; }
+.player-progress-bar:focus-visible { outline: 2px solid var(--gold); outline-offset: 6px; }
+.custom-video-player:focus-within .player-bottom-bar {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
 .progress-buffered {
   position: absolute;
   top: 0;
@@ -612,11 +621,14 @@
   }
   .time-display {
     font-size: 0.72rem;
+    margin-left: 0;
   }
+  .player-controls-row { flex-wrap: wrap; gap: .5rem; }
+  .controls-left, .controls-right { gap: .25rem; }
+  .controls-right { margin-inline-start: auto; }
   .ctrl-btn {
-    min-height: 34px;
-    min-width: 34px;
+    min-height: 44px;
+    min-width: 44px;
     padding: 0.35rem;
   }
 }
-

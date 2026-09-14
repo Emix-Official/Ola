@@ -21,31 +21,50 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: "time-tableau",
+    name: "Time Tableau",
+    category: "Web App / Student Tools",
+    status: "Live beta",
+    headline: "A clearer view of the university week.",
+    summary:
+      "A university timetable project that grew into a student-focused app for checking classes and planning the week.",
+    story:
+      "I started with automatic timetable generation to help reduce scheduling conflicts. When I shared previews with my class, their interest pushed me to build a student-facing experience. The current beta is based on my own class timetable.",
+    image: {
+      src: "projects/time-tableau.webp",
+      alt: "Time Tableau showing a university class timetable, calendar, and next-class details.",
+      width: 1600,
+      height: 895,
+    },
+    url: "https://timetableau-two.vercel.app/",
+    linkLabel: "Explore the beta",
+  },
+  {
     id: "nfc-bridge",
     name: "NFC Bridge",
     category: "Hardware / System Utility",
     status: "Prototype",
     preview: "nfc",
     headline:
-      "Relaying physical NFC credentials from mobile to desktop environments.",
+      "A tap on your phone. An action on your computer.",
     summary:
-      "A cross-device communication utility that captures NFC tag payloads via an Android phone and routes them directly to desktop workflows over USB serial.",
+      "A prototype connecting a phone’s NFC reader to a desktop app over USB, with the goal of turning scanned tags into configurable computer actions.",
     story:
-      "Built to bridge the gap between phone NFC readers and desktop terminals without requiring expensive dedicated hardware peripherals. Uses lightweight packet serialization for zero-latency input emulation.",
-    url: "https://github.com/Emix-Official",
+      "The idea is to use hardware already in your pocket. Scan a tag on your phone, pass it to the desktop app, and map it to a workflow such as starting a timer or opening a set of apps.",
+    url: "https://github.com/Emix-Official/NFC-Bridge-Desktop",
     linkLabel: "Explore repository",
   },
   {
     id: "senseaid",
     name: "SenseAid",
-    category: "AI / Accessibility",
-    status: "Production",
+    category: "Web / Accessibility",
+    status: "University prototype",
     headline:
-      "Multimodal assistive technology for deaf and mute communication.",
+      "Exploring more accessible education for students.",
     summary:
-      "Web platform engineered for the deaf, mute, and visually impaired community featuring real-time sign language recognition powered by computer vision models.",
+      "A first-year university project exploring tools and resources for students with disabilities.",
     story:
-      "Served as backend lead and ML engineer, integrating MediaPipe gesture tracking with Firebase real-time infrastructure to deliver sub-100ms inference directly in browser clients.",
+      "We initially explored AI integration, but that part remained unfinished. I implemented features within the site itself so we could share a working prototype. It is one of my early projects and a useful record of what I was learning.",
     image: {
       src: "projects/senseaid.png",
       alt: "SenseAid homepage with accessible education resources and support categories.",

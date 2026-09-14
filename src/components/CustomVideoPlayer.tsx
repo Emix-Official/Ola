@@ -105,6 +105,7 @@ export default function CustomVideoPlayer({ clips, activeClipId, onSelectClip }:
     return () => {
       observer?.disconnect()
       document.removeEventListener('visibilitychange', handleVisibilityChange)
+      video.pause()
     }
   }, [])
 
@@ -195,7 +196,7 @@ export default function CustomVideoPlayer({ clips, activeClipId, onSelectClip }:
   const onPointerDownProgress = (e: ReactPointerEvent<HTMLDivElement>) => {
     setIsScrubbing(true)
     handleProgressPointer(e)
-    ;(e.target as HTMLElement).setPointerCapture(e.pointerId)
+    e.currentTarget.setPointerCapture(e.pointerId)
   }
 
   const onPointerMoveProgress = (e: ReactPointerEvent<HTMLDivElement>) => {
@@ -216,7 +217,7 @@ export default function CustomVideoPlayer({ clips, activeClipId, onSelectClip }:
     if (isScrubbing) {
       setIsScrubbing(false)
       try {
-        ;(e.target as HTMLElement).releasePointerCapture(e.pointerId)
+        e.currentTarget.releasePointerCapture(e.pointerId)
       } catch {
         // Pointer capture release safety
       }
@@ -225,6 +226,8 @@ export default function CustomVideoPlayer({ clips, activeClipId, onSelectClip }:
   }
 
   const handleKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>) => {
+    // Buttons and volume controls keep their native keyboard behavior.
+    if (e.target !== e.currentTarget) return
     if (['Space', 'KeyK'].includes(e.code)) {
       e.preventDefault()
       togglePlay()
@@ -392,8 +395,19 @@ export default function CustomVideoPlayer({ clips, activeClipId, onSelectClip }:
           onPointerDown={onPointerDownProgress}
           onPointerMove={onPointerMoveProgress}
           onPointerUp={onPointerUpProgress}
+          onPointerCancel={onPointerUpProgress}
           onPointerLeave={() => setHoverTime(null)}
           role="slider"
+          tabIndex={0}
+          onKeyDown={(event) => {
+            if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+              event.preventDefault()
+              seekRelative(event.key === 'ArrowRight' ? 5 : -5)
+            } else if (event.key === 'Home' || event.key === 'End') {
+              event.preventDefault()
+              if (videoRef.current) videoRef.current.currentTime = event.key === 'Home' ? 0 : duration
+            }
+          }}
           aria-label="Seek time"
           aria-valuemin={0}
           aria-valuemax={Math.round(duration)}

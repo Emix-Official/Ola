@@ -63,13 +63,21 @@ export function createScenePlayback(root: Object3D, clips: AnimationClip[]) {
       time += step
       if (time >= duration) playing = false
     },
-    bounds() {
+    bounds(objects: Object3D[] = [root], centered = false) {
       const box = new Box3()
+      const sample = new Box3()
+      const center = new Vector3()
       const savedTime = time
       // Sample the path so the opening camera includes moving cars as well as their start.
       for (let index = 0; index <= (duration > 0 ? 12 : 0); index++) {
         seek(duration > 0 ? duration * index / 12 : 0)
-        box.union(new Box3().setFromObject(root, true))
+        // These rigid cars have no skinning or morph targets. Reuse each mesh's
+        // local bounding box instead of walking two million vertices per sample.
+        boundsOfObjects(objects, sample)
+        // A following camera needs the changing size of the group, not the
+        // entire distance the group travels along the road.
+        if (centered) sample.translate(sample.getCenter(center).negate())
+        box.union(sample)
       }
       seek(savedTime)
       return box
@@ -80,6 +88,12 @@ export function createScenePlayback(root: Object3D, clips: AnimationClip[]) {
       mixer.uncacheRoot(root)
     },
   }
+}
+
+export function boundsOfObjects(objects: Object3D[], target = new Box3()) {
+  target.makeEmpty()
+  for (const object of objects) target.expandByObject(object)
+  return target
 }
 
 export function cameraFrame(bounds: Box3, aspect: number, verticalFov: number) {

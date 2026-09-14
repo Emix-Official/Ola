@@ -6,18 +6,15 @@ import RaceSceneView from './RaceSceneView'
 import CustomVideoPlayer from './CustomVideoPlayer'
 import '../styles/race.css'
 
-function RaceFeature({ clips }: { clips: RaceClip[] }) {
-  const [selectedId, setSelectedId] = useState(clips[0].id)
-  const clip = clips.find((item) => item.id === selectedId) ?? clips[0]
-
+function RaceFeature({ clip, onSelectClip }: { clip: RaceClip; onSelectClip: (id: string) => void }) {
   return (
     <figure className="race-feature">
       <div className="race-screen">
         <CustomVideoPlayer
-          key={selectedId}
-          clips={clips}
-          activeClipId={selectedId}
-          onSelectClip={setSelectedId}
+          key={clip.id}
+          clips={[clip]}
+          activeClipId={clip.id}
+          onSelectClip={onSelectClip}
         />
       </div>
 
@@ -51,16 +48,17 @@ function RacePlaceholder() {
 }
 
 function RaceExperience() {
-  const [mode, setMode] = useState<'film' | 'scene'>('film')
+  const [mode, setMode] = useState(raceFilm.clips[0]?.id ?? 'film')
+  const clip = raceFilm.clips.find((item) => item.id === mode) ?? raceFilm.clips[0]
 
   return (
     <>
       <div className="race-mode-controls" role="group" aria-label="Choose how to explore the race">
-        {(raceFilm.clips.length > 0 || import.meta.env.DEV) && (
-          <button type="button" aria-pressed={mode === 'film'} onClick={() => setMode('film')}>
-            Watch the film
+        {raceFilm.clips.map((item) => (
+          <button key={item.id} type="button" aria-pressed={mode === item.id} onClick={() => setMode(item.id)}>
+            {item.label}
           </button>
-        )}
+        ))}
         {(raceScene.enabled || import.meta.env.DEV) && (
           <button type="button" aria-pressed={mode === 'scene'} onClick={() => setMode('scene')}>
             Explore in 3D
@@ -68,15 +66,15 @@ function RaceExperience() {
         )}
       </div>
 
-      {mode === 'film' ? (
-        raceFilm.clips.length > 0 ? <RaceFeature clips={raceFilm.clips} /> : import.meta.env.DEV ? (
+      {mode !== 'scene' ? (
+        clip ? <RaceFeature clip={clip} onSelectClip={setMode} /> : import.meta.env.DEV ? (
           <RacePlaceholder />
         ) : (
           <div className="race-scene-placeholder"><p>{raceScene.description}</p></div>
         )
       ) : raceScene.enabled ? (
         <>
-          <RaceSceneView />
+          <RaceSceneView onReturnToFilm={raceFilm.clips.length > 0 ? () => setMode(raceFilm.clips[0].id) : undefined} />
           <div className="race-caption">
             <div>
               <h3>{raceFilm.title}</h3>

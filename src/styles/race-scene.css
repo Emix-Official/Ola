@@ -1,7 +1,8 @@
 .race-mode-controls { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1rem; }
 .race-mode-controls button,
 .race-scene-controls button,
-.race-scene-message button {
+.race-scene-message button,
+.race-touch-toggle {
   min-width: 44px;
   min-height: 44px;
   padding: .65rem 1rem;
@@ -16,12 +17,15 @@
   border-color: var(--gold);
 }
 .race-scene-controls button:disabled { cursor: default; opacity: .5; }
-.race-scene-stage { position: relative; aspect-ratio: 16 / 9; min-height: 280px; background: #080808; }
+.race-scene-stage { position: relative; isolation: isolate; aspect-ratio: 16 / 9; min-height: 280px; background: #080808; }
 .race-scene-host { position: absolute; inset: 0; }
-.race-scene-canvas { display: block; width: 100%; height: 100%; cursor: grab; }
-.race-scene-canvas:active { cursor: grabbing; }
+.race-scene-poster { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.race-scene-canvas { display: block; width: 100%; height: 100%; }
+.race-scene-canvas.is-interactive { cursor: grab; }
+.race-scene-canvas.is-interactive:active { cursor: grabbing; }
 .race-scene-message {
   position: absolute;
+  z-index: 2;
   inset: 0;
   display: flex;
   align-items: center;
@@ -30,11 +34,28 @@
   gap: 1rem;
   padding: 1.5rem;
   text-align: center;
-  background: #080808;
+  background: rgb(8 8 8 / .82);
   color: #e8e8e8;
 }
 .race-scene-message p { max-width: 42ch; line-height: 1.6; }
+.race-load-title { font-size: clamp(1rem, 2vw, 1.4rem); }
+.race-load-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
+.race-download { width: min(100%, 18rem); display: flex; align-items: center; gap: 1rem; font-variant-numeric: tabular-nums; font-size: .8rem; }
+.race-download progress { flex: 1; min-width: 0; height: .4rem; accent-color: #d4a017; }
+.race-download span { white-space: nowrap; }
+.race-touch-toggle { position: absolute; z-index: 1; top: .75rem; right: .75rem; background: #080808; color: #e8e8e8; border-color: #d4a017; }
+.race-touch-toggle[aria-pressed='true'] { background: #d4a017; color: #080808; }
 .race-scene-controls { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+.race-scene-controls .race-play-button { background: var(--gold); color: var(--btn-gold-text); border-color: var(--gold); }
 .race-scene-hint { margin-top: .85rem; color: var(--text-secondary); font-size: .8rem; line-height: 1.7; }
 .race-scene-placeholder { padding: 3rem 1.5rem; background: var(--bg-panel); border: 1px solid var(--border-panel); }
 .race-scene-placeholder p { max-width: 50ch; line-height: 1.7; }
+
+@media (max-width: 600px) {
+  .race-mode-controls { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .4rem; }
+  .race-mode-controls button { padding: .65rem .4rem; font-size: .75rem; }
+  .race-scene-stage { aspect-ratio: 4 / 3; min-height: 260px; }
+  .race-scene-controls { gap: .4rem; }
+  .race-scene-controls button { padding: .6rem .75rem; }
+  .race-scene-message { padding: 1rem; gap: .75rem; }
+}
