@@ -3,7 +3,7 @@ import type { PointerEvent } from 'react'
 import { createCoreMotion } from '../lib/coreMotion'
 import type { TiltStatus } from '../lib/coreMotion'
 
-export function useCoreMotion() {
+export function useCoreMotion(scale = 1) {
   const sceneRef = useRef<HTMLDivElement>(null)
   const controllerRef = useRef<ReturnType<typeof createCoreMotion> | null>(null)
   const [status, setStatus] = useState<TiltStatus>('idle')
@@ -11,13 +11,13 @@ export function useCoreMotion() {
   useEffect(() => {
     const scene = sceneRef.current
     if (!scene) return
-    const controller = createCoreMotion(scene, setStatus)
+    const controller = createCoreMotion(scene, setStatus, scale)
     controllerRef.current = controller
     return () => {
       controller.dispose()
       controllerRef.current = null
     }
-  }, [])
+  }, [scale])
 
   return {
     sceneRef,

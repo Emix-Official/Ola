@@ -217,3 +217,41 @@
     transition: none;
   }
 }
+
+.contact-email {
+  display: inline-block;
+  margin-top: 1.5rem;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  color: var(--accent-text);
+  text-underline-offset: 0.3em;
+  line-height: 1.6;
+}
+.contact-email:hover {
+  text-decoration: underline;
+}
+.contact-copy-status {
+  min-height: 1.5em;
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+.contact-socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+}
+.contact-socials a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  border-bottom: 1px solid var(--border-panel);
+}
+.contact-socials a:hover {
+  color: var(--accent-text);
+  border-color: var(--border-gold-dim);
+}

@@ -394,3 +394,85 @@
     transition: none;
   }
 }
+
+/* A lightweight cover for Upright; this is a concept, not an app screenshot. */
+.document-art {
+  display: grid;
+  grid-template-columns: 1fr 0.3fr 1fr;
+  align-items: center;
+  gap: 0.7rem;
+  width: 85%;
+  max-width: 470px;
+  color: var(--accent-text);
+}
+.document-sources {
+  position: relative;
+  aspect-ratio: 0.75;
+}
+.document-sheet {
+  position: absolute;
+  inset: 10% 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  border: 1px solid var(--border-gold-dim);
+  padding: 15% 12%;
+  background: var(--bg-panel-alt);
+  font:
+    0.7rem ui-monospace,
+    monospace;
+  transform-origin: bottom center;
+  transition: transform 350ms ease;
+}
+.document-sheet--back {
+  transform: rotate(-13deg) translateX(-9%);
+}
+.document-sheet--middle {
+  transform: rotate(-5deg);
+}
+.document-sheet--front {
+  transform: rotate(5deg) translateX(8%);
+  border-color: var(--accent-text);
+}
+.document-art i {
+  display: block;
+  height: 1px;
+  background: var(--border-gold-dim);
+}
+.document-art i:last-of-type {
+  width: 65%;
+}
+.document-arrow {
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  text-align: center;
+}
+.document-result {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 16% 12%;
+  aspect-ratio: 0.72;
+  border: 1px solid var(--accent-text);
+  background: var(--bg-root);
+  box-shadow: 6px 6px 0 var(--gold-glow);
+}
+.document-result > span {
+  font-size: clamp(0.9rem, 2.5vw, 1.6rem);
+  letter-spacing: -0.05em;
+  margin-bottom: 0.5rem;
+}
+.document-result small {
+  margin-top: auto;
+  font:
+    0.5rem ui-monospace,
+    monospace;
+  letter-spacing: 0.04em;
+}
+@media (hover: hover) and (pointer: fine) {
+  .work-visual:hover .document-sheet--back {
+    transform: rotate(-19deg) translateX(-14%);
+  }
+  .work-visual:hover .document-sheet--front {
+    transform: rotate(9deg) translateX(12%);
+  }
+}

@@ -5,6 +5,8 @@ import RaceShowcase from './components/RaceShowcase'
 import { showRaceShowcase } from './data/raceScene'
 import ContactWindow from './components/ContactWindow'
 import About from './components/About'
+import WorkGallery from './components/WorkGallery'
+import { profile } from './data/profile'
 import { useTheme } from './hooks/useTheme'
 import type { Theme, ThemePhase } from './hooks/useTheme'
 import './styles/motion.css'
@@ -71,14 +73,16 @@ export default function App() {
 
         <RaceShowcase />
 
-        <About />
+        <WorkGallery />
+
+        <About theme={theme} />
 
         <ContactWindow />
       </main>
 
       <footer className="site-footer container">
         <span>© {new Date().getFullYear()} Olaoluwa Abiodun</span>
-        <a href="https://github.com/Emix-Official" target="_blank" rel="noreferrer">GitHub ↗</a>
+        <a href={profile.github} target="_blank" rel="noreferrer">GitHub ↗</a>
       </footer>
     </div>
   )

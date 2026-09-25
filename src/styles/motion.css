@@ -1,3 +1,24 @@
+.section-reveal[data-reveal] {
+  transition:
+    opacity 550ms ease,
+    transform 550ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+.section-reveal[data-reveal="waiting"] {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.section-reveal[data-reveal="visible"] {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .section-reveal[data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 /* The mask stays fixed while the light moves underneath it. */
 .core-scene::before {
   background: radial-gradient(

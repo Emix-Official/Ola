@@ -17,6 +17,7 @@ function getScreenAngle() {
 export function createCoreMotion(
   scene: HTMLDivElement,
   onStatus: (status: TiltStatus) => void,
+  scale = 1,
 ) {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
   let disposed = false
@@ -61,8 +62,8 @@ export function createCoreMotion(
     current = smoothTilt(current, target, elapsed)
     const settled = Math.abs(current.x - target.x) + Math.abs(current.y - target.y) < 0.01
     if (settled) current = { ...target }
-    scene.style.setProperty('--tilt-x', `${current.x.toFixed(3)}deg`)
-    scene.style.setProperty('--tilt-y', `${current.y.toFixed(3)}deg`)
+    scene.style.setProperty('--tilt-x', `${(current.x * scale).toFixed(3)}deg`)
+    scene.style.setProperty('--tilt-y', `${(current.y * scale).toFixed(3)}deg`)
     scene.style.setProperty('--light-x', `${50 + current.y / TILT_SETTINGS.maxAngle * 18}%`)
     scene.style.setProperty('--light-y', `${50 - current.x / TILT_SETTINGS.maxAngle * 18}%`)
     if (!settled) frame = window.requestAnimationFrame(draw)

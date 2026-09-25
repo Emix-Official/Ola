@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { KeyboardEvent } from "react";
-import { projects } from "../data/projects";
-import type { Project } from "../data/projects";
+import { featuredProjects as projects } from "../data/projects";
+import ProjectVisual from "./ProjectVisual";
 import "../styles/work.css";
 
 const COMPACT_QUERY = "(max-width: 800px)";
@@ -16,69 +16,6 @@ function subscribeToLayout(onChange: () => void) {
 
 function getCompactLayout() {
   return window.matchMedia(COMPACT_QUERY).matches;
-}
-
-function BridgePreview() {
-  return (
-    <div
-      className="bridge-art"
-      role="img"
-      aria-label="Connection concept: an Android phone sends an NFC tag ID to a desktop over USB."
-    >
-      <div className="bridge-device" aria-hidden="true">
-        <div className="bridge-phone">
-          <span>NFC</span>
-        </div>
-        <span>Android</span>
-      </div>
-
-      <div className="bridge-wire" aria-hidden="true">
-        <span>USB →</span>
-      </div>
-
-      <div className="bridge-device" aria-hidden="true">
-        <div className="bridge-screen">
-          <span>&gt;_</span>
-        </div>
-        <span>Desktop</span>
-      </div>
-    </div>
-  );
-}
-
-function ProjectVisual({ project }: { project: Project }) {
-  const [failedSrc, setFailedSrc] = useState<string | null>(null);
-  const image = project.image;
-  const showImage = image && image.src !== failedSrc;
-
-  return (
-    <div className="work-visual">
-      {showImage ? (
-        <img
-          className="work-image"
-          src={`${import.meta.env.BASE_URL}${image.src.replace(/^\/+/, "")}`}
-          alt={image.alt}
-          width={image.width}
-          height={image.height}
-          loading="lazy"
-          decoding="async"
-          onError={() => setFailedSrc(image.src)}
-        />
-      ) : project.preview === "nfc" ? (
-        <BridgePreview />
-      ) : (
-        <p className="work-placeholder">{project.name}</p>
-      )}
-
-      <span className="work-visual-caption">
-        {showImage
-          ? "Interface preview"
-          : project.preview === "nfc"
-            ? "Connection concept"
-            : "Project cover"}
-      </span>
-    </div>
-  );
 }
 
 export default function SelectedWork() {
@@ -218,6 +155,7 @@ export default function SelectedWork() {
                 <p className="work-status">{project.status}</p>
                 <h3>{project.headline}</h3>
                 <p className="work-summary">{project.summary}</p>
+                {project.role && <p className="project-role">{project.role}</p>}
 
                 <details className="work-note">
                   <summary>
@@ -241,6 +179,9 @@ export default function SelectedWork() {
           ))}
         </div>
       </div>
+      <a className="text-link" href="#gallery">
+        More work and experiments <span aria-hidden="true">↓</span>
+      </a>
     </section>
   );
 }
